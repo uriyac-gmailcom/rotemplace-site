@@ -31,8 +31,8 @@
 <meta name="twitter:title" content="רותם פלייס – קוסמטיקאית בגבעתיים">
 <meta name="twitter:description" content="טיפולי פנים, הסרת שיער, אקנה ואנטי-אייג'ינג אצל רותם כהן, קוסמטיקאית מוסמכת PME. סירקין 5, גבעתיים.">
 
-<meta name="theme-color" content="#EEF1EF" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#141D20" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F7F2EE" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1A1512" media="(prefers-color-scheme: dark)">
 <meta name="format-detection" content="telephone=yes">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,7 +50,9 @@
   "alternateName": "Rotem Place",
   "description": "קליניקת קוסמטיקה בגבעתיים בניהול רותם כהן, קוסמטיקאית מוסמכת PME עם ניסיון של 13 שנה. טיפולי פנים מותאמים אישית, הסרת שיער בפנים ובגוף, טיפולי אקנה, פיגמנטציה ואנטי-אייג'ינג.",
   "url": "https://www.rotemplace.co.il/",
-  "image": ["https://www.rotemplace.co.il/assets/brows-before-after.jpg"],
+  "image": ["https://www.rotemplace.co.il/assets/rotem-portrait.jpg",
+            "https://www.rotemplace.co.il/assets/brows-before-after.jpg"],
+  "logo": "https://www.rotemplace.co.il/assets/logo.png",
   "telephone": "+972545777732",
   "address": {
     "@type": "PostalAddress",
@@ -163,7 +165,9 @@
 <a class="visually-hidden" href="#main">דילוג לתוכן הראשי</a>
 
 <header class="shell site-head">
-  <span class="brand">רותם פלייס</span>
+  <a class="brand" href="#main" aria-label="רותם פלייס — לראש העמוד">
+    <img src="assets/logo.png" width="900" height="799" alt="רותם פלייס — New Age Cosmetics" decoding="async">
+  </a>
   <a class="btn btn--secondary btn--sm" href="tel:+972545777732" aria-label="להתקשר לרותם">
     <span dir="ltr">054-577-7732</span>
   </a>
@@ -173,6 +177,7 @@
 
   <!-- ===== HERO — no photograph, by design ===== -->
   <section class="shell section hero">
+   <div class="hero__text">
     <p class="annot" aria-hidden="true">
       <span class="annot__tick"></span>
       <span class="annot__label">סירקין 5, גבעתיים</span>
@@ -203,6 +208,12 @@
       <li><strong>בגבעתיים</strong><span>קרוב לרמת גן ולתל אביב</span></li>
       <li><strong>מטופלת אחת בכל רגע</strong><span>בלי למהר אף אחת החוצה</span></li>
     </ul>
+   </div>
+
+   <figure class="hero__portrait">
+     <img src="assets/rotem-portrait.jpg" width="570" height="654" fetchpriority="high" decoding="async" alt="רותם כהן, בעלת רותם פלייס">
+     <figcaption>רותם כהן · קוסמטיקאית מוסמכת PME</figcaption>
+   </figure>
   </section>
 
   <!-- ===== SERVICES ===== -->
@@ -225,9 +236,6 @@
       </article>
     </div>
 
-    <figure class="photo photo--r4x5">
-      <img src="assets/treatment-device.jpg" width="720" height="1280" loading="lazy" decoding="async" alt="טיפול הסרת שיער בגוף בקליניקה בגבעתיים">
-    </figure>
 
     <h2>טיפולי פנים בגבעתיים – מותאמים אישית לעור שלך</h2>
     <div class="svc-list">
@@ -251,8 +259,8 @@
       </article>
     </div>
 
-    <div class="results">
-      <figure class="photo photo--true photo--r4x5">
+    <div class="results results--single">
+      <figure class="photo photo--r4x5">
         <img src="assets/acne-before-after.jpg" width="1440" height="1800" loading="lazy" decoding="async" alt="טיפול באקנה ברותם פלייס — לפני ואחרי">
         <figcaption>טיפול באקנה — לפני ואחרי</figcaption>
       </figure>
@@ -290,11 +298,11 @@
     </div>
 
     <div class="results">
-      <figure class="photo photo--true photo--r4x5">
+      <figure class="photo photo--r4x5">
         <img src="assets/brows-before-after.jpg" width="1440" height="1920" loading="lazy" decoding="async" alt="עיצוב גבות ברותם פלייס — לפני ואחרי">
         <figcaption>עיצוב גבות — לפני ואחרי</figcaption>
       </figure>
-      <figure class="photo photo--true photo--r1x1">
+      <figure class="photo photo--r1x1">
         <img src="assets/lashes-before-after.jpg" width="990" height="990" loading="lazy" decoding="async" alt="הרמת ריסים ברותם פלייס — לפני ואחרי">
         <figcaption>הרמת ריסים — לפני ואחרי</figcaption>
       </figure>

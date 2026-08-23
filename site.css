@@ -285,9 +285,7 @@ figure.photo {
    tokens.css. The duotone exists to unify 24 mismatched phone frames, but only
    three curated photographs are used here, and for a skin clinic the colour IS
    the evidence: a grayscale before/after proves nothing about skin or brows. */
-.photo--true > img { filter: none; }
-.photo--true::before,
-.photo--true::after { content: none; }
+
 
 /* --- price line on a service card ---------------------------------------
    Sourced from Rotem's own EasyBizy booking data, where the prices are
@@ -323,3 +321,138 @@ figure.photo {
   letter-spacing: var(--ls-label);
   color: var(--accent);
 }
+
+
+/* ==========================================================================
+   WARM PASS — the page now takes its colour from Rotem's own logo (gold
+   monogram, script wordmark) instead of the cooler clinical palette it
+   started from, and it leads with her face rather than with type alone.
+   ========================================================================== */
+
+/* --- photography in full colour ------------------------------------------
+   The duotone existed to unify 24 mismatched reel frames. The page now runs
+   on seven chosen photographs, and for a skin clinic the colour is the point. */
+.photo > img { filter: none; }
+.photo::before,
+.photo::after { content: none; }
+.photo { border-color: var(--line); border-radius: 4px; }
+
+/* --- the brand mark ------------------------------------------------------- */
+.site-head { padding-block: var(--s5) var(--s4); border-block-end: 0; }
+
+a.brand { display: inline-flex; align-items: center; text-decoration: none; }
+a.brand img {
+  block-size: 46px;
+  inline-size: auto;
+  display: block;
+}
+a.brand:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
+
+@media (min-width: 40rem) {
+  a.brand img { block-size: 58px; }
+}
+
+/* --- hero: her face beside the promise ------------------------------------ */
+.hero { padding-block-start: var(--s5); }
+
+.hero__portrait {
+  margin: var(--s7) 0 0;
+  position: relative;
+}
+
+.hero__portrait img {
+  inline-size: 100%;
+  max-inline-size: 22rem;
+  block-size: auto;
+  display: block;
+  border-radius: 4px;
+  /* a warm ground behind a cut-out studio shot, so it sits on the page
+     instead of floating on a white rectangle */
+  background: linear-gradient(160deg, var(--accent-wash), var(--surface-2));
+  box-shadow: 0 1px 2px rgba(36,28,23,.06), 0 24px 48px -30px rgba(36,28,23,.5);
+}
+
+.hero__portrait figcaption {
+  margin-block-start: var(--s3);
+  font-size: var(--t-label);
+  font-weight: 700;
+  letter-spacing: var(--ls-label);
+  color: var(--accent);
+  max-inline-size: 22rem;
+}
+
+@media (min-width: 56rem) {
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
+    gap: var(--s8);
+    align-items: center;
+  }
+  .hero__portrait { margin-block-start: 0; }
+  .hero__portrait img { max-inline-size: none; }
+  .hero h1 { max-inline-size: none; }
+}
+
+/* --- softer, warmer surfaces --------------------------------------------- */
+.task, .svc, .policy { border-radius: 4px; }
+
+.trust { border-block-start-color: var(--line); }
+
+.results figcaption { color: var(--accent); }
+
+/* the gold accent is a highlight, not a shout: it marks, it does not fill */
+.annot__tick { background: var(--accent); }
+.svc__meta a { color: var(--accent); }
+
+
+/* ==========================================================================
+   PROPORTION PASS — no single photograph may dominate the page, every
+   result frame shares one ratio so the grid reads as a set, and the vertical
+   rhythm tightens so sections sit closer than they stand apart.
+   ========================================================================== */
+
+:root { --section-y: var(--s6); }
+@media (min-width: 56rem) { :root { --section-y: var(--s7); } }
+
+/* one ratio for every proof frame — a set, not a scrapbook */
+.results img {
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.results { align-items: start; }
+
+/* a lone frame should not run the full column width */
+.results--single { grid-template-columns: 1fr; max-inline-size: 22rem; }
+@media (min-width: 40rem) { .results--single { grid-template-columns: 1fr; } }
+
+/* the standalone figures (the working shot, the room) stay modest */
+figure.photo {
+  max-inline-size: 26rem;
+  margin-block-end: var(--s6);
+}
+
+.hero__portrait { max-inline-size: none; }
+
+/* the hero's two columns should not drift apart on a wide screen */
+@media (min-width: 56rem) {
+  .hero { gap: var(--s7); align-items: center; padding-block-end: var(--s6); }
+  .hero__portrait img { max-inline-size: 26rem; margin-inline-start: auto; }
+  .hero__portrait figcaption { max-inline-size: 26rem; margin-inline-start: auto; text-align: start; }
+}
+
+/* the trust strip reads as one line of evidence, not four stacked columns */
+.trust strong { font-size: var(--t-small); }
+.trust span { font-size: .8rem; }
+
+/* A section with a single treatment card was leaving half the grid empty.
+   One card should read as deliberate, not as a hole where a second used to be. */
+.svc-list:has(> :only-child) {
+  grid-template-columns: 1fr;
+  max-inline-size: var(--measure);
+}
+
+/* a lone proof frame anchors to the text column it belongs to */
+.results--single { margin-inline-end: auto; }

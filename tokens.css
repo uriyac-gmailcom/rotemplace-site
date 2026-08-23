@@ -23,24 +23,20 @@
   color-scheme: light dark;
 
   /* --- colour ------------------------------------------------------------ */
-  --bg:            #EEF1EF;   /* porcelain, cool green-grey — not cream      */
-  --surface:       #F7F9F8;   /* raised panels, dock, hover rows             */
-  --ink:           #17262A;   /* 13.71:1 on --bg                             */
-  --ink-muted:     #4E6167;   /*  5.72:1 on --bg                             */
-  --accent:        #A3213E;   /* crimson-lake (red-light) 6.49:1 on --bg     */
-  --accent-wash:   #F6E9EC;   /* today-row only                              */
-  --line:          #C9D3CF;   /* decorative hairline (never a boundary)      */
-  --line-strong:   #788B86;   /*  3.16:1 on --bg — meaningful boundaries     */
-  --on-ink:        #EEF1EF;   /* label on an --ink surface                   */
+  --bg:            #F7F2EE;   /* warm ivory, taken from the logo field */
+  --surface:       #FFFFFF;   /* raised panels */
+  --ink:           #241C17;   /* 15.2:1 on --bg */
+  --ink-muted:     #6B5B4E;   /*  5.99:1 on --bg */
+  --accent:        #8A6220;   /* antique gold  5.04:1 on --bg */
+  --accent-wash:   #F3E9DC;   /* warm wash */
+  --line:          #E4D9CD;   /* hairline */
+  --line-strong:   #A9998A;   /* meaningful boundary */
+  --on-ink:        #F7F2EE;   /* label on an --ink surface */
 
   /* duotone endpoints: multiply=highlight, screen=shadow */
-  --duo-hi:        #E3E9E5;
-  --duo-lo:        #1B2C31;
-
-  /* scrim for text over photography (flat, never a gradient ramp) */
-  --scrim:         rgba(23, 38, 42, .78);
-
-  /* --- type -------------------------------------------------------------- */
+  --duo-hi:        #EDE4DA;
+  --duo-lo:        #2A211A;
+  --scrim:         rgba(36, 28, 23, .78);
   --font-display: "Frank Ruhl Libre", "David Libre", "Narkisim", "Times New Roman", serif;
   --font-body:    "Assistant", "Heebo", "Arial Hebrew", "Segoe UI", Arial, sans-serif;
 
@@ -57,32 +53,28 @@
   --lh-h2:      1.20;
   --lh-h3:      1.35;
   --lh-lead:    1.75;
-  --lh-body:    1.80;   /* Hebrew is dense and unicase — it needs this */
+  --lh-body:    1.80;
   --lh-small:   1.65;
 
   --ls-display: -.015em;
   --ls-h2:      -.010em;
   --ls-label:    .14em;
-
-  /* --- space (4px base) --------------------------------------------------- */
   --s1: 4px;  --s2: 8px;   --s3: 12px;  --s4: 16px;  --s5: 24px;
   --s6: 32px; --s7: 48px;  --s8: 64px;  --s9: 96px;  --s10: 128px;
 
   /* --- layout ------------------------------------------------------------- */
   --gutter:  20px;
-  --measure: 34rem;   /* 45–60 Hebrew chars — shorter than a Latin measure */
+  --measure: 34rem;
   --shell:   72rem;
   --section-y: var(--s7);
   --radius:  2px;
   --dock-h:  64px;
-
-  /* --- motion ------------------------------------------------------------- */
   --ease:      cubic-bezier(.22, .61, .36, 1);
   --dur-fast:  120ms;
   --dur-mid:   240ms;
   --dur-slow:  500ms;
 
-  --annot-scale: 1;   /* JS sets 0 before reveal; falls back to drawn */
+  --annot-scale: 1;
 }
 
 
@@ -94,38 +86,38 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg:          #101A1D;
-    --surface:     #172427;
-    --ink:         #E4EBE8;   /* 14.61:1 on --bg */
-    --ink-muted:   #9DAEAA;   /*  7.64:1 on --bg */
-    --accent:      #DE5C77;   /*  4.97:1 on --bg */
-    --accent-wash: #2A1A20;
-    --line:        #2C3B3E;
-    --line-strong: #607472;   /*  3.57:1 on --bg */
-    --on-ink:      #101A1D;
+    --bg:          #1A1512;   /* warm near-black */
+    --surface:     #221C18;
+    --ink:         #F2EAE2;   /* 15.1:1 on --bg */
+    --ink-muted:   #B5A79A;   /*  7.56:1 on --bg */
+    --accent:      #E0B463;   /* gold, lifted   9.37:1 on --bg */
+    --accent-wash: #2E2418;
+    --line:        #362D27;
+    --line-strong: #6B5C50;
+    --on-ink:      #1A1512;
 
-    --duo-hi:      #9FB0AC;   /* dimmer at night — the page is read at 22:40 */
-    --duo-lo:      #0B1417;
+    --duo-hi:      #B0A292;
+    --duo-lo:      #120E0B;
 
-    --scrim:       rgba(6, 12, 14, .80);
+    --scrim:       rgba(12, 9, 7, .80) ;
   }
 }
 
 :root[data-theme="dark"] {
-  --bg:          #101A1D;
-  --surface:     #172427;
-  --ink:         #E4EBE8;
-  --ink-muted:   #9DAEAA;
-  --accent:      #DE5C77;
-  --accent-wash: #2A1A20;
-  --line:        #2C3B3E;
-  --line-strong: #607472;
-  --on-ink:      #101A1D;
+  --bg:          #1A1512;   /* warm near-black */
+  --surface:     #221C18;
+  --ink:         #F2EAE2;   /* 15.1:1 on --bg */
+  --ink-muted:   #B5A79A;   /*  7.56:1 on --bg */
+  --accent:      #E0B463;   /* gold, lifted   9.37:1 on --bg */
+  --accent-wash: #2E2418;
+  --line:        #362D27;
+  --line-strong: #6B5C50;
+  --on-ink:      #1A1512;
 
-  --duo-hi:      #9FB0AC;
-  --duo-lo:      #0B1417;
+  --duo-hi:      #B0A292;
+  --duo-lo:      #120E0B;
 
-  --scrim:       rgba(6, 12, 14, .80);
+  --scrim:       rgba(12, 9, 7, .80) ;
 }
 
 
