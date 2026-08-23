@@ -1,96 +1,433 @@
 /* ==========================================================================
-   Rotem Place — page layout on top of tokens.css
-   Only page-level composition lives here. All colour/type/space comes from
-   the tokens. Nothing is defined solely inside a media query.
+   Rotem Place — page composition on top of tokens.css
+   Hebrew / RTL / mobile-first.
+
+   This file had accumulated three passes that argued with each other — a
+   duotone declared and then cancelled, a price rule for prices that were
+   removed, an accordion for markup that became native <details>, the hero
+   portrait sitting on a gradient whose second colour stop did not exist,
+   and one photo ratio set twice with two different answers. It is now one
+   pass. Colour, type and space still come only from the tokens.
+
+   Reading order:
+     1  header
+     2  hero — the introduction to a person
+     3  ruled headings — the page's notation system
+     4  treatments — the ledger
+     5  proof frames
+     6  reels
+     7  about
+     8  process
+     9  FAQ
+    10  closing panel
+    11  clinic + hours
+    12  footer + social
+    13  wide-screen composition
+    14  motion
    ========================================================================== */
 
-/* --- header --------------------------------------------------------------- */
+
+/* ==========================================================================
+   1. HEADER
+   ========================================================================== */
+
 .site-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--s4);
-  padding-block: var(--s4);
-  border-block-end: 1px solid var(--line);
+  padding-block: var(--s5) var(--s4);
 }
 
+/* logo.png is a transparent PNG whose script wordmark is black, so on the
+   dark theme it needs a lit mount. --brand-plate is transparent in light. */
 .brand {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.125rem;
-  letter-spacing: -.01em;
-  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  background: var(--brand-plate);
+  border-radius: var(--radius-frame);
+  padding: var(--brand-pad, 0);
 }
+
+.brand img {
+  block-size: 54px;
+  inline-size: auto;
+  display: block;
+}
+
+.brand:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
 .btn--sm {
-  min-block-size: 38px;
+  min-block-size: 44px;
   padding-inline: var(--s4);
   font-size: var(--t-small);
 }
 
-/* --- hero ----------------------------------------------------------------- */
+
+/* ==========================================================================
+   2. HERO — an introduction to a person
+   ========================================================================== */
+
+.hero { padding-block-start: var(--s5); }
+
+/* Section padding does the separating on this page; elements do not add
+   their own trailing margin on top of it. */
+
 .hero h1 {
   margin-block: var(--s4) var(--s5);
-  max-inline-size: 18ch;
+  max-inline-size: 17ch;
 }
 
-.hero .t-lead {
-  max-inline-size: var(--measure);
-}
+.hero .t-lead { max-inline-size: var(--measure); }
 
-.hero__cta {
-  margin-block-start: var(--s6);
-  max-inline-size: 26rem;
-  gap: var(--s3);
+.hero .t-lead strong { color: var(--ink); font-weight: 700; }
+
+.hero__cta,
+.cta .hero__cta {
   display: flex;
   flex-direction: column;
+  gap: var(--s3);
+  margin-block-start: var(--s6);
+  max-inline-size: 26rem;
+}
+
+/* --- the portrait plate ---------------------------------------------------
+   Her portrait is a studio shot on a near-white ground (measured #F6F6F4),
+   which on warm ivory reads as a cut-out pasted onto the page — that is what
+   it was doing before. Mounting it on --plate and multiplying the image into
+   that ground dissolves the studio white into the mount, leaves her hair and
+   clothes untouched, and leaves the soft falloff at the foot of the frame as
+   a real vignette. The mount is light in both themes, so in the dark theme
+   this becomes a lit portrait on a dark wall. */
+
+.hero__portrait {
+  margin: var(--s7) 0 0;
+  position: relative;
+  isolation: isolate;                 /* keep the multiply inside the mount */
+  background: var(--plate);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-frame);
+  padding: var(--s4) var(--s4) var(--s3);
+  max-inline-size: 24rem;
+}
+
+/* the inner gold hairline of a mounted print — 4.42:1 on --plate */
+.hero__portrait::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  z-index: 2;
+  border: 1px solid var(--plate-line);
+  border-radius: 2px;
+  pointer-events: none;
+  opacity: .55;
+}
+
+.hero__portrait img {
+  inline-size: 100%;
+  block-size: auto;
+  display: block;
+  /* the source carries a wide margin of empty studio on both sides; a 3:4
+     window keeps all of her and drops the air */
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: 50% 50%;
+  mix-blend-mode: multiply;
+}
+
+/* --on-plate, not --ink: the mount keeps its own light in both themes,
+   so its caption colour has to be fixed too. 12.80:1 on --plate. */
+.hero__portrait figcaption {
+  position: relative;
+  z-index: 3;
+  margin-block-start: var(--s4);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--s3);
+  align-items: start;
+  font-size: var(--t-small);
+  font-weight: 600;
+  line-height: var(--lh-small);
+  color: var(--on-plate);
+}
+
+.hero__portrait figcaption::before {
+  content: "";
+  inline-size: 6px;
+  block-size: 6px;
+  margin-block-start: .5em;
+  background: var(--plate-line);
 }
 
 /* --- trust strip ---------------------------------------------------------- */
+
 .trust {
-  list-style: none;
-  margin: var(--s7) 0 0;
-  padding: 0;
+  margin-block-start: var(--s7);
+  padding-block-start: var(--s5);
+  border-block-start: 1px solid var(--line);
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--s4);
-  border-block-start: 1px solid var(--line);
-  padding-block-start: var(--s5);
+  gap: var(--s4) var(--s5);
 }
 
-.trust li {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
+.trust li { display: flex; flex-direction: column; gap: 2px; }
 
 .trust strong {
-  font-size: var(--t-body);
+  font-size: var(--t-small);
   font-weight: 700;
   color: var(--ink);
 }
 
 .trust span {
-  font-size: var(--t-small);
+  font-size: .8rem;
   line-height: var(--lh-small);
   color: var(--ink-muted);
 }
 
-/* --- services / cards ----------------------------------------------------- */
-.svc-list {
-  margin-block: var(--s4) var(--s7);
+
+/* ==========================================================================
+   3. RULED HEADINGS — two display tiers, one notation
+   A section opens with --t-h2 at 700. A group inside a section titles itself
+   at --t-h2-sub at 500 over the same two-tone rule the .annot uses, so the
+   long treatments section reads as chapters rather than as one flat list.
+   ========================================================================== */
+
+.section > h2 {
+  margin-block-end: var(--s5);
+  max-inline-size: 22ch;
 }
 
+#treatments > h2 {
+  position: relative;
+  margin-block: var(--s7) var(--s4);
+  padding-block-start: var(--s5);
+  font-size: var(--t-h2-sub);
+  font-weight: 500;
+  letter-spacing: -.012em;
+  max-inline-size: 26ch;
+}
+
+#treatments > h2::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  block-size: 1px;
+  background: var(--rule-fill);
+  transform-origin: right;            /* RTL: rules grow away from the label */
+}
+
+#treatments > h2:first-of-type { margin-block-start: var(--s5); }
+
+
+/* ==========================================================================
+   4. TREATMENTS — entries in a ledger, not boxes in a grid
+   Her whole argument is "אבחון אישי בכל טיפול — לא פרוטוקול אחיד", so each
+   treatment is set as a noted entry: the same 6px gold tick that marks a
+   section label marks an item, and a hairline closes each row.
+   ========================================================================== */
+
+.svc-list { margin-block: var(--s4) 0; }
+
+/* One card is a decision, not a hole where a second card used to be. */
+.svc-list:has(> :only-child) {
+  grid-template-columns: 1fr;
+  max-inline-size: var(--measure);
+}
+
+.svc {
+  padding-block: var(--s5);
+  border-block-end: 1px solid var(--line);
+  border-radius: 0;
+}
+
+.svc__title {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--s3);
+  align-items: start;
+}
+
+.svc__title::before {
+  content: "";
+  inline-size: 6px;
+  block-size: 6px;
+  margin-block-start: .62em;
+  background: var(--accent);
+  transition: transform var(--dur-mid) var(--ease);
+}
+
+.svc__desc,
+.svc__meta { padding-inline-start: calc(6px + var(--s3)); }
+
+/* The mark stays tight to the text; the tap area is grown behind it to a
+   comfortable 44px rather than pushing the rule away from the word. */
 .svc__meta a {
+  position: relative;
+  display: inline-block;
   color: var(--accent);
   text-decoration: none;
   border-block-end: 1px solid currentColor;
-  padding-block-end: 1px;
+  padding-block-end: 3px;
+}
+.svc__meta a::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  inset-block: -11px;
 }
 
-.svc__meta a:hover { color: var(--ink); }
+/* The tokens hover pulled the row out into the gutter, which inside a
+   two-column grid pushed it under its neighbour. The mark answers instead. */
+@media (hover: hover) {
+  .svc:hover {
+    background: none;
+    margin-inline: 0;
+    padding-inline: 0;
+    border-block-end-color: var(--line-strong);
+  }
+  .svc:hover .svc__title::before { transform: scale(1.7); }
+  .svc__meta a:hover { color: var(--ink); }
+}
 
-/* --- prose ---------------------------------------------------------------- */
+.svc:active { transform: none; }
+
+
+/* ==========================================================================
+   5. PROOF FRAMES
+   ========================================================================== */
+
+figure.photo {
+  margin: 0;
+  max-inline-size: 26rem;
+}
+
+.results {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s4);
+  margin-block: var(--s6) 0;
+  align-items: start;
+}
+
+.results figure { margin: 0; max-inline-size: none; }
+
+/* Every captioned frame in .results was losing its caption: .photo is the
+   frame itself, and it clips to its ratio, so the <figcaption> was pushed
+   out of the box and hidden. The ratio moves onto the image; the frame
+   becomes a column that holds the picture and its caption together.
+
+   The before/after frames are evidence and must read as one set, so inside
+   #treatments they share one window. The clinic photographs downpage are a
+   room and a shelf, not a set — each keeps its own. */
+.results > .photo {
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: auto;
+}
+
+.results > .photo > img { inline-size: 100%; block-size: auto; object-fit: cover; }
+
+.results > .photo--r1x1  > img { aspect-ratio: 1 / 1; }
+.results > .photo--r4x5  > img { aspect-ratio: 4 / 5; }
+.results > .photo--r16x9 > img { aspect-ratio: 16 / 9; }
+#treatments .results > .photo > img { aspect-ratio: 4 / 5; }
+
+.results figcaption {
+  padding: var(--s3) var(--s4);
+  border-block-start: 1px solid var(--line);
+  background: var(--surface);
+  font-size: var(--t-label);
+  font-weight: 700;
+  letter-spacing: var(--ls-label);
+  color: var(--accent);
+}
+
+/* A lone frame anchors to the text column it belongs to. */
+.results--single {
+  grid-template-columns: 1fr;
+  max-inline-size: 21rem;
+  margin-inline-end: auto;
+}
+
+
+/* ==========================================================================
+   6. REELS — 9:16 phone video, presented the way it was shot
+   On a phone they are a snapping rail you swipe, which is the vernacular
+   they come from and which stops four 9:16 videos from stacking into four
+   screens of scroll. On a desktop they are a four-up set. Native controls
+   are never covered: the caption sits below the frame, never over it.
+   ========================================================================== */
+
+.reels {
+  display: grid;
+  grid-auto-flow: column;
+  /* A definite track, not minmax(0, …): with a zero minimum the four
+     columns simply squeezed themselves into the container instead of
+     overflowing it, and the rail collapsed to ~97px frames. */
+  grid-auto-columns: min(70vw, 17rem);
+  gap: var(--s4);
+  margin-block-start: var(--s6);
+  /* the rail runs to the shell edges without ever widening the page */
+  margin-inline: calc(var(--gutter) * -1);
+  padding-inline: var(--gutter);
+  padding-block-end: var(--s3);
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: inline mandatory;
+  scroll-padding-inline: var(--gutter);
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+.reel {
+  margin: 0;
+  scroll-snap-align: start;
+  min-inline-size: 0;
+}
+
+.reel video {
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  display: block;
+  background: var(--plate);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-frame);
+  transition: border-color var(--dur-mid) var(--ease);
+}
+
+.reel:hover video,
+.reel:focus-within video { border-color: var(--accent); }
+
+.reel figcaption {
+  margin-block-start: var(--s3);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--s3);
+  align-items: start;
+  font-size: var(--t-small);
+  font-weight: 600;
+  line-height: var(--lh-small);
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.reel figcaption::before {
+  content: "";
+  inline-size: 6px;
+  block-size: 6px;
+  margin-block-start: .55em;
+  background: var(--accent);
+}
+
+
+/* ==========================================================================
+   7. ABOUT
+   ========================================================================== */
+
 .prose {
   max-inline-size: var(--measure);
   margin-block-start: var(--s5);
@@ -105,17 +442,34 @@
   color: var(--ink-muted);
 }
 
-.prose p:first-child { color: var(--ink); }
+/* she introduces herself in the first line — set it at full strength */
+.prose p:first-child {
+  color: var(--ink);
+  font-size: var(--t-lead);
+  line-height: var(--lh-lead);
+  font-weight: 500;
+}
 
-/* --- process steps -------------------------------------------------------- */
+/* .photo--r16x9 was cropping the top of her head off, and a landscape
+   window has no presence beside a tall column of prose. The same 4:5 the
+   proof frames use, anchored left because that is where she stands in the
+   frame. */
+#about > figure.photo {
+  margin-block-start: var(--s6);
+  aspect-ratio: 4 / 5;
+}
+#about > figure.photo > img { object-position: 0% 50%; }
+
+
+/* ==========================================================================
+   8. PROCESS — a real sequence, so it is really numbered
+   ========================================================================== */
+
 .steps {
-  list-style: none;
-  margin: var(--s5) 0 0;
-  padding: 0;
+  margin-block-start: var(--s5);
   max-inline-size: var(--measure);
-  display: flex;
-  flex-direction: column;
-  gap: var(--s5);
+  display: grid;
+  gap: var(--s6);
 }
 
 .steps li {
@@ -126,15 +480,17 @@
 }
 
 .steps .num {
-  inline-size: 30px;
-  block-size: 30px;
+  inline-size: 34px;
+  block-size: 34px;
   display: grid;
   place-items: center;
   border: 1px solid var(--line-strong);
   border-radius: 50%;
-  color: var(--accent);
+  font-family: var(--font-display);
   font-weight: 700;
-  font-size: var(--t-small);
+  font-size: var(--t-lead);
+  line-height: 1;
+  color: var(--accent);
 }
 
 .steps strong {
@@ -152,70 +508,16 @@
   color: var(--ink-muted);
 }
 
-/* --- figures -------------------------------------------------------------- */
-figure.photo {
-  margin: 0 0 var(--s7);
-}
 
-/* --- faq ------------------------------------------------------------------ */
+/* ==========================================================================
+   9. FAQ — native <details>, so it cannot silently fail to open
+   ========================================================================== */
+
 .faq { margin-block-start: var(--s5); max-inline-size: var(--measure); }
-.faq h3 { margin: 0; }
 
-/* --- cta section ---------------------------------------------------------- */
-.cta h2 { max-inline-size: 22ch; }
-.cta .t-lead { max-inline-size: var(--measure); margin-block-start: var(--s4); }
-
-/* --- hours ---------------------------------------------------------------- */
-.hours { margin-block-start: var(--s5); max-inline-size: 26rem; }
-
-/* --- footer --------------------------------------------------------------- */
-.site-foot {
-  border-block-start: 1px solid var(--line);
-  display: flex;
-  flex-direction: column;
-  gap: var(--s4);
-  padding-block-end: calc(var(--dock-h) + var(--s7));
-}
-
-.foot-links {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--s2);
-  font-size: var(--t-small);
-  color: var(--ink-muted);
-}
-
-.foot-links a {
-  color: var(--ink);
-  text-decoration: none;
-  border-block-end: 1px solid var(--line-strong);
-}
-
-.foot-links a:hover { color: var(--accent); border-block-end-color: var(--accent); }
-
-/* --- wider screens -------------------------------------------------------- */
-@media (min-width: 40rem) {
-  .trust { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s5); }
-  .hero__cta { flex-direction: row; }
-  .hero__cta .btn { inline-size: auto; flex: 0 1 auto; padding-inline: var(--s6); }
-  .foot-links { flex-direction: row; flex-wrap: wrap; gap: var(--s5); }
-}
-
-@media (min-width: 60rem) {
-  .trust { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .svc-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 var(--s7); }
-  .site-foot { padding-block-end: var(--s8); }
-}
-
-/* FAQ — native <details>. The tokens.css accordion relied on a
-   0fr -> 1fr grid transition that measured 0px in testing even with an
-   explicit `auto` track, and on a sibling selector that cannot reach past the
-   <h3> the heading structure requires. <details> needs neither CSS nor JS to
-   open, so it cannot silently fail. */
-.faq details.faq__item { border-block-end: 1px solid var(--line); }
+/* tokens.css rules each row off at the foot; the first one needs a head so
+   the set closes as a block rather than trailing off at the top */
+.faq > .faq__item:first-child { border-block-start: 1px solid var(--line); }
 
 .faq summary.faq__q {
   display: grid;
@@ -241,15 +543,11 @@ figure.photo {
 
 .faq details[open] summary.faq__q h3 { font-weight: 700; }
 
-.faq summary.faq__q:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
+.faq summary.faq__q:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
 /* the vertical stroke of the "+" collapses into a "−" when open */
 .faq details[open] .faq__sign::before { transform: rotate(90deg) scaleX(0); }
 
-.faq .faq__a { display: block; }
 .faq .faq__a p {
   margin: 0;
   color: var(--ink-muted);
@@ -258,62 +556,41 @@ figure.photo {
   padding-block-end: var(--s5);
 }
 
-/* --- results: the before/after pairs, her strongest proof ----------------- */
-.results {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--s4);
-  margin-block: var(--s5) var(--s7);
+
+/* ==========================================================================
+   10. CLOSING PANEL
+   The last ask sits on the warm wash so the page arrives somewhere instead
+   of simply stopping, and the cancellation policy sits beside it as a
+   margin note — plain, ruled, not a card inside a card.
+   ========================================================================== */
+
+.cta {
+  background: var(--accent-wash);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-frame);
+  padding-block: var(--s7);
+  margin-block: var(--s7);
 }
 
-.results figure { margin: 0; }
+.cta h2 { max-inline-size: 20ch; }
+.cta .t-lead { max-inline-size: var(--measure); margin-block-start: var(--s4); }
 
-.results figcaption {
-  padding: var(--s3) var(--s4);
-  font-size: var(--t-label);
-  font-weight: 700;
-  letter-spacing: var(--ls-label);
-  color: var(--ink-muted);
-  border-block-start: 1px solid var(--line);
-}
-
-@media (min-width: 40rem) {
-  .results { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s5); }
-}
-
-/* Photography in true colour — a deliberate exception to the duotone rule in
-   tokens.css. The duotone exists to unify 24 mismatched phone frames, but only
-   three curated photographs are used here, and for a skin clinic the colour IS
-   the evidence: a grayscale before/after proves nothing about skin or brows. */
-
-
-/* --- price line on a service card ---------------------------------------
-   Sourced from Rotem's own EasyBizy booking data, where the prices are
-   already public. Nothing here is estimated. */
-.svc__price {
-  margin-block-start: var(--s2);
-  font-size: var(--t-small);
-  font-weight: 600;
-  color: var(--ink);
-  font-variant-numeric: tabular-nums;
-}
-
-/* --- cancellation policy -------------------------------------------------
-   Rotem's own wording, taken from her booking system. It protects her diary,
-   and stating it up front is also what a serious clinic reads like. */
 .policy {
   margin-block-start: var(--s7);
-  padding: var(--s5);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
   max-inline-size: var(--measure);
+  border-inline-start: 1px solid var(--line-strong);  /* RTL: the right edge */
+  padding-inline-start: var(--s5);
   display: flex;
   flex-direction: column;
   gap: var(--s3);
 }
 
-.policy p { margin: 0; font-size: var(--t-small); line-height: var(--lh-small); color: var(--ink-muted); }
+.policy p {
+  margin: 0;
+  font-size: var(--t-small);
+  line-height: var(--lh-small);
+  color: var(--ink-muted);
+}
 
 .policy .lbl-policy {
   font-weight: 700;
@@ -324,135 +601,260 @@ figure.photo {
 
 
 /* ==========================================================================
-   WARM PASS — the page now takes its colour from Rotem's own logo (gold
-   monogram, script wordmark) instead of the cooler clinical palette it
-   started from, and it leads with her face rather than with type alone.
+   11. CLINIC + HOURS
    ========================================================================== */
 
-/* --- photography in full colour ------------------------------------------
-   The duotone existed to unify 24 mismatched reel frames. The page now runs
-   on seven chosen photographs, and for a skin clinic the colour is the point. */
-.photo > img { filter: none; }
-.photo::before,
-.photo::after { content: none; }
-.photo { border-color: var(--line); border-radius: 4px; }
-
-/* --- the brand mark ------------------------------------------------------- */
-.site-head { padding-block: var(--s5) var(--s4); border-block-end: 0; }
-
-a.brand { display: inline-flex; align-items: center; text-decoration: none; }
-a.brand img {
-  block-size: 46px;
-  inline-size: auto;
-  display: block;
-}
-a.brand:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
-
-@media (min-width: 40rem) {
-  a.brand img { block-size: 58px; }
-}
-
-/* --- hero: her face beside the promise ------------------------------------ */
-.hero { padding-block-start: var(--s5); }
-
-.hero__portrait {
-  margin: var(--s7) 0 0;
-  position: relative;
-}
-
-.hero__portrait img {
-  inline-size: 100%;
-  max-inline-size: 22rem;
-  block-size: auto;
-  display: block;
-  border-radius: 4px;
-  /* a warm ground behind a cut-out studio shot, so it sits on the page
-     instead of floating on a white rectangle */
-  background: linear-gradient(160deg, var(--accent-wash), var(--surface-2));
-  box-shadow: 0 1px 2px rgba(36,28,23,.06), 0 24px 48px -30px rgba(36,28,23,.5);
-}
-
-.hero__portrait figcaption {
-  margin-block-start: var(--s3);
-  font-size: var(--t-label);
-  font-weight: 700;
-  letter-spacing: var(--ls-label);
-  color: var(--accent);
-  max-inline-size: 22rem;
-}
-
-@media (min-width: 56rem) {
-  .hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
-    gap: var(--s8);
-    align-items: center;
-  }
-  .hero__portrait { margin-block-start: 0; }
-  .hero__portrait img { max-inline-size: none; }
-  .hero h1 { max-inline-size: none; }
-}
-
-/* --- softer, warmer surfaces --------------------------------------------- */
-.task, .svc, .policy { border-radius: 4px; }
-
-.trust { border-block-start-color: var(--line); }
-
-.results figcaption { color: var(--accent); }
-
-/* the gold accent is a highlight, not a shout: it marks, it does not fill */
-.annot__tick { background: var(--accent); }
-.svc__meta a { color: var(--accent); }
+.hours { margin-block-start: var(--s5); max-inline-size: 24rem; }
 
 
 /* ==========================================================================
-   PROPORTION PASS — no single photograph may dominate the page, every
-   result frame shares one ratio so the grid reads as a set, and the vertical
-   rhythm tightens so sections sit closer than they stand apart.
+   12. FOOTER + SOCIAL
+   The dock is fixed, so the single mechanism that clears it is the
+   padding-block-end on <body> in tokens.css. The footer used to add the
+   dock height a second time, reserving it twice.
    ========================================================================== */
 
-:root { --section-y: var(--s6); }
-@media (min-width: 56rem) { :root { --section-y: var(--s7); } }
-
-/* one ratio for every proof frame — a set, not a scrapbook */
-.results img {
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  inline-size: 100%;
-  block-size: 100%;
+.site-foot {
+  border-block-start: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s5);
+  padding-block-end: var(--s7);
 }
 
-.results { align-items: start; }
-
-/* a lone frame should not run the full column width */
-.results--single { grid-template-columns: 1fr; max-inline-size: 22rem; }
-@media (min-width: 40rem) { .results--single { grid-template-columns: 1fr; } }
-
-/* the standalone figures (the working shot, the room) stay modest */
-figure.photo {
-  max-inline-size: 26rem;
-  margin-block-end: var(--s6);
+.foot-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+  font-size: var(--t-small);
+  color: var(--ink-muted);
 }
 
-.hero__portrait { max-inline-size: none; }
+.foot-links li { display: flex; align-items: center; min-block-size: 44px; }
 
-/* the hero's two columns should not drift apart on a wide screen */
+.foot-links a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 44px;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+}
+
+.foot-links a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+/* --- social: a deliberate row, sized to be tapped ------------------------- */
+
+.social {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s3);
+  padding-block: var(--s4);
+  border-block: 1px solid var(--line);
+}
+
+.social__label {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--t-label);
+  line-height: 1;
+  letter-spacing: var(--ls-label);
+  color: var(--ink-muted);
+  margin-inline-end: var(--s2);
+}
+
+.social__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+  min-block-size: 44px;
+  padding-inline: var(--s4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink);
+  font-size: var(--t-small);
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color var(--dur-fast) var(--ease),
+              color        var(--dur-fast) var(--ease);
+}
+
+.social__link:hover { border-color: var(--accent); color: var(--accent); }
+
+/* The two marks are drawn differently — Instagram as strokes, Facebook as a
+   filled glyph — so each shape is told what it is instead of forcing one
+   fill rule onto both and losing the lens dot or the whole f. */
+.social__icon {
+  inline-size: 18px;
+  block-size: 18px;
+  flex: none;
+  color: var(--accent);
+}
+.social__icon rect,
+.social__icon circle { fill: none; stroke: currentColor; stroke-width: 1.6; }
+.social__icon circle[fill] { fill: currentColor; stroke: none; }
+.social__icon path { fill: currentColor; stroke: none; }
+
+.social__link:hover .social__icon { color: currentColor; }
+
+
+/* ==========================================================================
+   13. WIDE-SCREEN COMPOSITION
+   The page has one axis and it is the right edge. What changes at width is
+   what fills the left of it — a frame, a note, a photograph — so sections
+   are composed rather than left half-empty.
+   ========================================================================== */
+
+@media (min-width: 40rem) {
+  .brand img { block-size: 68px; }
+  .trust { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s5); }
+  .hero__cta,
+  .cta .hero__cta { flex-direction: row; max-inline-size: none; }
+  .hero__cta .btn { inline-size: auto; flex: 0 1 auto; padding-inline: var(--s6); }
+  .foot-links { flex-direction: row; flex-wrap: wrap; gap: var(--s5); }
+  .results { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s5); }
+  .results--single { grid-template-columns: 1fr; }
+  .cta { padding-inline: var(--s7); }
+}
+
 @media (min-width: 56rem) {
-  .hero { gap: var(--s7); align-items: center; padding-block-end: var(--s6); }
-  .hero__portrait img { max-inline-size: 26rem; margin-inline-start: auto; }
-  .hero__portrait figcaption { max-inline-size: 26rem; margin-inline-start: auto; text-align: start; }
+  /* hero: her face on the left, the promise hung on the right edge */
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.22fr) minmax(0, .78fr);
+    gap: var(--s8);
+    align-items: center;
+  }
+  .hero__portrait { margin-block-start: 0; max-inline-size: none; }
+
+  .reels {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--s5);
+    margin-inline: 0;
+    padding-inline: 0;
+    overflow: visible;
+    scroll-snap-type: none;
+  }
 }
 
-/* the trust strip reads as one line of evidence, not four stacked columns */
-.trust strong { font-size: var(--t-small); }
-.trust span { font-size: .8rem; }
+@media (min-width: 60rem) {
+  .svc-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 var(--s8);
+  }
 
-/* A section with a single treatment card was leaving half the grid empty.
-   One card should read as deliberate, not as a hole where a second used to be. */
-.svc-list:has(> :only-child) {
-  grid-template-columns: 1fr;
-  max-inline-size: var(--measure);
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s7) var(--s8); max-inline-size: none; }
+
+  /* A group with one treatment used to be capped at the measure, which left
+     the other half of the line empty. The entry opens up instead: name on
+     the right, what it is on the left, one ledger row across the page. */
+  .svc-list:has(> :only-child) { max-inline-size: none; }
+  .svc-list:has(> :only-child) > .svc {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+    column-gap: var(--s8);
+    align-items: start;
+  }
+  .svc-list:has(> :only-child) > .svc > .svc__title { grid-column: 1; }
+  .svc-list:has(> :only-child) > .svc > .svc__desc {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    margin-block-start: 0;
+    padding-inline-start: 0;
+  }
+
+  .faq { max-inline-size: var(--measure-wide); }
+
+  /* about: her words on the right, her hands on the left */
+  #about {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, .8fr);
+    column-gap: var(--s8);
+    align-items: start;
+  }
+  #about > .annot,
+  #about > h2 { grid-column: 1 / -1; }
+  #about > .prose { grid-column: 1; }
+  #about > figure.photo {
+    grid-column: 2;
+    grid-row: 3;
+    margin: var(--s5) 0 0;
+    max-inline-size: none;
+  }
+
+  /* closing panel: the ask on the right, the policy as a note on the left */
+  .cta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 21rem);
+    column-gap: var(--s8);
+    align-items: start;
+  }
+  .cta > .annot { grid-column: 1 / -1; }
+  .cta > h2,
+  .cta > .t-lead,
+  .cta > .hero__cta { grid-column: 1; }
+  .cta > .policy {
+    grid-column: 2;
+    grid-row: 2 / span 3;
+    margin-block-start: 0;
+    max-inline-size: none;
+  }
+
+  /* clinic: the hours on the right, the room on the left */
+  #location {
+    display: grid;
+    grid-template-columns: minmax(0, 24rem) minmax(0, 1fr);
+    column-gap: var(--s8);
+    align-items: start;
+  }
+  #location > .annot,
+  #location > h2 { grid-column: 1 / -1; }
+  #location > .hours { grid-column: 1; }
+  #location > .results { grid-column: 2; margin-block: var(--s5) 0; }
 }
 
-/* a lone proof frame anchors to the text column it belongs to */
-.results--single { margin-inline-end: auto; }
+/* the dock is gone from here up, so the body no longer reserves room for it */
+@media (min-width: 900px) {
+  .site-foot { padding-block-end: var(--s8); }
+}
+
+
+/* ==========================================================================
+   14. MOTION
+   Two gestures only, both scroll-driven, both purely decorative, and both
+   declared so that their FINISHED state is the default: a browser without
+   animation-timeline, and any visitor who asks for reduced motion, gets the
+   completed page with nothing hidden and nothing delayed. Body copy is
+   never animated.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+
+    /* the rules draw themselves right-to-left, the way the page is read */
+    @keyframes rule-draw { from { transform: scaleX(0); } }
+
+    /* frames settle in; they never fade content that carries meaning */
+    @keyframes frame-settle {
+      from { opacity: 0; transform: translateY(14px); }
+    }
+
+    .annot__rule,
+    #treatments > h2::before {
+      animation: rule-draw linear both;
+      animation-timeline: view();
+      animation-range: entry 12% cover 20%;
+    }
+
+    .results > .photo,
+    .reel,
+    #about > figure.photo {
+      animation: frame-settle var(--dur-slow) var(--ease) both;
+      animation-timeline: view();
+      animation-range: entry 4% entry 65%;
+    }
+  }
+}
