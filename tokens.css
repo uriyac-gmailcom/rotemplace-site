@@ -1,0 +1,681 @@
+@import url("https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&family=Frank+Ruhl+Libre:wght@500;700&display=swap");
+
+/* ==========================================================================
+   Rotem Place — קליניקת קוסמטיקה, סירקין 5 גבעתיים
+   Design tokens + base + components.  Hebrew / RTL / mobile-first.
+
+   Requires in the HTML:
+     <html lang="he" dir="rtl">
+     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+   For better performance, replace the @import above with, in <head>:
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&family=Frank+Ruhl+Libre:wght@500;700&display=swap" rel="stylesheet">
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. TOKENS — LIGHT (complete palette on bare :root)
+   ========================================================================== */
+
+:root {
+  color-scheme: light dark;
+
+  /* --- colour ------------------------------------------------------------ */
+  --bg:            #EEF1EF;   /* porcelain, cool green-grey — not cream      */
+  --surface:       #F7F9F8;   /* raised panels, dock, hover rows             */
+  --ink:           #17262A;   /* 13.71:1 on --bg                             */
+  --ink-muted:     #4E6167;   /*  5.72:1 on --bg                             */
+  --accent:        #A3213E;   /* crimson-lake (red-light) 6.49:1 on --bg     */
+  --accent-wash:   #F6E9EC;   /* today-row only                              */
+  --line:          #C9D3CF;   /* decorative hairline (never a boundary)      */
+  --line-strong:   #788B86;   /*  3.16:1 on --bg — meaningful boundaries     */
+  --on-ink:        #EEF1EF;   /* label on an --ink surface                   */
+
+  /* duotone endpoints: multiply=highlight, screen=shadow */
+  --duo-hi:        #E3E9E5;
+  --duo-lo:        #1B2C31;
+
+  /* scrim for text over photography (flat, never a gradient ramp) */
+  --scrim:         rgba(23, 38, 42, .78);
+
+  /* --- type -------------------------------------------------------------- */
+  --font-display: "Frank Ruhl Libre", "David Libre", "Narkisim", "Times New Roman", serif;
+  --font-body:    "Assistant", "Heebo", "Arial Hebrew", "Segoe UI", Arial, sans-serif;
+
+  --t-display: clamp(2rem, 8.5vw, 3.25rem);
+  --t-h2:      clamp(1.5rem, 6vw, 2.125rem);
+  --t-h3:      1.1875rem;
+  --t-lead:    1.0625rem;
+  --t-body:    1rem;
+  --t-small:   .875rem;
+  --t-label:   .6875rem;
+  --t-num:     .9375rem;
+
+  --lh-display: 1.14;
+  --lh-h2:      1.20;
+  --lh-h3:      1.35;
+  --lh-lead:    1.75;
+  --lh-body:    1.80;   /* Hebrew is dense and unicase — it needs this */
+  --lh-small:   1.65;
+
+  --ls-display: -.015em;
+  --ls-h2:      -.010em;
+  --ls-label:    .14em;
+
+  /* --- space (4px base) --------------------------------------------------- */
+  --s1: 4px;  --s2: 8px;   --s3: 12px;  --s4: 16px;  --s5: 24px;
+  --s6: 32px; --s7: 48px;  --s8: 64px;  --s9: 96px;  --s10: 128px;
+
+  /* --- layout ------------------------------------------------------------- */
+  --gutter:  20px;
+  --measure: 34rem;   /* 45–60 Hebrew chars — shorter than a Latin measure */
+  --shell:   72rem;
+  --section-y: var(--s7);
+  --radius:  2px;
+  --dock-h:  64px;
+
+  /* --- motion ------------------------------------------------------------- */
+  --ease:      cubic-bezier(.22, .61, .36, 1);
+  --dur-fast:  120ms;
+  --dur-mid:   240ms;
+  --dur-slow:  500ms;
+
+  --annot-scale: 1;   /* JS sets 0 before reveal; falls back to drawn */
+}
+
+
+/* ==========================================================================
+   2. TOKENS — DARK
+   Two identical blocks, per the required pattern. Never define a colour
+   for the first time inside a media query.
+   ========================================================================== */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:          #101A1D;
+    --surface:     #172427;
+    --ink:         #E4EBE8;   /* 14.61:1 on --bg */
+    --ink-muted:   #9DAEAA;   /*  7.64:1 on --bg */
+    --accent:      #DE5C77;   /*  4.97:1 on --bg */
+    --accent-wash: #2A1A20;
+    --line:        #2C3B3E;
+    --line-strong: #607472;   /*  3.57:1 on --bg */
+    --on-ink:      #101A1D;
+
+    --duo-hi:      #9FB0AC;   /* dimmer at night — the page is read at 22:40 */
+    --duo-lo:      #0B1417;
+
+    --scrim:       rgba(6, 12, 14, .80);
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg:          #101A1D;
+  --surface:     #172427;
+  --ink:         #E4EBE8;
+  --ink-muted:   #9DAEAA;
+  --accent:      #DE5C77;
+  --accent-wash: #2A1A20;
+  --line:        #2C3B3E;
+  --line-strong: #607472;
+  --on-ink:      #101A1D;
+
+  --duo-hi:      #9FB0AC;
+  --duo-lo:      #0B1417;
+
+  --scrim:       rgba(6, 12, 14, .80);
+}
+
+
+/* ==========================================================================
+   3. RESET
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+* { margin: 0; padding: 0; }
+
+html {
+  direction: rtl;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+  font-weight: 400;
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* clear the sticky dock */
+  padding-block-end: calc(var(--dock-h) + env(safe-area-inset-bottom, 0px));
+}
+
+img, picture, video, svg { display: block; max-width: 100%; }
+
+button, input, select, textarea { font: inherit; color: inherit; }
+
+button { background: none; border: 0; cursor: pointer; }
+
+ul, ol { list-style: none; }
+
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .22em; }
+
+/* Hebrew has no true italic — a synthetic oblique looks broken. */
+i, em, cite, address { font-style: normal; font-weight: 600; }
+
+:target { scroll-margin-block-start: var(--s7); }
+
+
+/* ==========================================================================
+   4. FOCUS  (visible in both themes: the offset reveals the page ground)
+   ========================================================================== */
+
+:focus { outline: none; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius);
+}
+
+
+/* ==========================================================================
+   5. BASE TYPOGRAPHY
+   ========================================================================== */
+
+h1, .t-display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--t-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-display);
+  text-wrap: balance;
+}
+
+h2, .t-h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--t-h2);
+  line-height: var(--lh-h2);
+  letter-spacing: var(--ls-h2);
+  text-wrap: balance;
+}
+
+h3, .t-h3 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+}
+
+.t-lead {
+  font-size: var(--t-lead);
+  line-height: var(--lh-lead);
+  max-inline-size: var(--measure);
+}
+
+.t-small { font-size: var(--t-small); line-height: var(--lh-small); }
+
+.t-muted { color: var(--ink-muted); }
+
+/* Hebrew has no uppercase — small-label hierarchy is weight + tracking + colour.
+   Never use text-transform here. */
+.t-label {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--t-label);
+  line-height: 1;
+  letter-spacing: var(--ls-label);
+  color: var(--ink-muted);
+}
+
+.t-label--accent { color: var(--accent); }
+
+p { max-inline-size: var(--measure); }
+p + p { margin-block-start: var(--s4); }
+
+/* Isolate LTR runs: times, phone numbers, "PME", "RF".
+   Without this the en-dash and digits reorder inside RTL text. */
+.num {
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+
+/* ==========================================================================
+   6. LAYOUT
+   ========================================================================== */
+
+.shell {
+  inline-size: 100%;
+  max-inline-size: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section { padding-block: var(--section-y); }
+
+/* Bleed a child to the viewport edges from inside .shell */
+.bleed {
+  margin-inline: calc(var(--gutter) * -1);
+}
+
+.stack > * + * { margin-block-start: var(--s4); }
+.stack-lg > * + * { margin-block-start: var(--s5); }
+
+.hr { block-size: 1px; background: var(--line); border: 0; }
+
+
+/* --- the signature: the annotation ---------------------------------------
+   label ▪ ————————————————⟵     (RTL flow puts the label at the right)
+   The rule draws itself right-to-left: the page's one gesture. */
+
+.annot {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  margin-block-end: var(--s5);
+}
+
+.annot__label {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--t-label);
+  line-height: 1;
+  letter-spacing: var(--ls-label);
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+
+.annot__tick {
+  flex: none;
+  inline-size: 6px;
+  block-size: 6px;
+  background: var(--accent);
+}
+
+.annot__rule {
+  flex: 1 1 auto;
+  block-size: 1px;
+  background: var(--line-strong);
+  transform-origin: right;
+  transform: scaleX(var(--annot-scale, 1));
+  transition: transform var(--dur-slow) var(--ease);
+}
+
+
+/* ==========================================================================
+   7. COMPONENTS
+   ========================================================================== */
+
+/* --- buttons -------------------------------------------------------------
+   Rectangles, 2px radius. No pills, no gradients, no shadows. */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s2);
+  min-block-size: 48px;
+  padding-inline: var(--s5);
+  padding-block: var(--s3);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: var(--t-body);
+  line-height: 1.2;
+  text-decoration: none;
+  transition: background-color var(--dur-fast) var(--ease),
+              border-color   var(--dur-fast) var(--ease),
+              color          var(--dur-fast) var(--ease),
+              transform       80ms var(--ease);
+}
+
+.btn:active { transform: translateY(1px); }
+
+.btn--primary {
+  background: var(--ink);
+  color: var(--on-ink);
+}
+@media (hover: hover) {
+  .btn--primary:hover { background: color-mix(in srgb, var(--ink) 88%, var(--bg)); }
+}
+
+.btn--secondary {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+@media (hover: hover) {
+  .btn--secondary:hover { background: var(--surface); border-color: var(--ink); }
+}
+
+.btn--block { display: flex; inline-size: 100%; }
+
+.btn--hero { min-block-size: 52px; }
+
+/* Icon-only target (the "just call me" users) */
+.btn--icon {
+  min-inline-size: 48px;
+  inline-size: 48px;
+  padding-inline: 0;
+}
+
+.btn[disabled], .btn[aria-disabled="true"] {
+  cursor: not-allowed;
+  background: var(--line-strong);
+  color: var(--bg);
+  border-color: transparent;
+  /* never fade below AA */
+  opacity: 1;
+}
+.btn--secondary[disabled], .btn--secondary[aria-disabled="true"] {
+  background: transparent;
+  color: var(--ink-muted);
+  border-color: var(--line);
+}
+
+.btn__icon { inline-size: 16px; block-size: 16px; flex: none; fill: none;
+             stroke: currentColor; stroke-width: 1.6; }
+
+
+/* --- sticky mobile CTA ---------------------------------------------------- */
+
+.cta-dock {
+  position: fixed;
+  inset-inline: 0;
+  inset-block-end: 0;
+  z-index: 60;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  background: var(--surface);
+  border-block-start: 1px solid var(--line-strong);
+  padding-inline: var(--gutter);
+  padding-block-start: 10px;
+  /* clears the iPhone home indicator; needs viewport-fit=cover */
+  padding-block-end: calc(10px + env(safe-area-inset-bottom, 0px));
+}
+
+/* It never hides, never animates in, never reacts to scroll direction. */
+@media (min-width: 900px) {
+  .cta-dock { display: none; }
+  body { padding-block-end: 0; }
+}
+
+
+/* --- service row ---------------------------------------------------------- */
+
+.svc {
+  display: block;
+  padding-block: var(--s5);
+  padding-inline: 0;
+  border-block-end: 1px solid var(--line);
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: background-color var(--dur-fast) var(--ease),
+              border-color     var(--dur-fast) var(--ease),
+              transform         80ms var(--ease);
+}
+
+.svc__title { font-weight: 600; font-size: var(--t-h3); line-height: var(--lh-h3); }
+.svc__desc  { margin-block-start: var(--s2); font-size: var(--t-small);
+              line-height: var(--lh-small); color: var(--ink-muted); }
+.svc__meta  { margin-block-start: var(--s3); font-weight: 700;
+              font-size: var(--t-label); letter-spacing: var(--ls-label);
+              color: var(--accent); }
+
+/* Background shift, not an accent rail. */
+@media (hover: hover) {
+  .svc:hover {
+    background: var(--surface);
+    border-block-end-color: var(--line-strong);
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+  }
+}
+.svc:active { transform: translateY(1px); }
+
+
+/* --- FAQ accordion -------------------------------------------------------- */
+
+.faq__item { border-block-end: 1px solid var(--line); }
+
+.faq__q {
+  inline-size: 100%;
+  min-block-size: 56px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: var(--s4);
+  padding-block: var(--s4);
+  text-align: start;
+  font-weight: 600;
+  font-size: var(--t-lead);
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.faq__q[aria-expanded="true"] { font-weight: 700; }
+
+/* "+" drawn in CSS; the vertical bar collapses to make "−". */
+.faq__sign { position: relative; inline-size: 14px; block-size: 14px; flex: none; }
+.faq__sign::before,
+.faq__sign::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 0;
+  inline-size: 14px;
+  block-size: 1.5px;
+  margin-block-start: -.75px;
+  background: var(--accent);
+  transition: transform var(--dur-mid) var(--ease);
+}
+.faq__sign::before { transform: rotate(90deg); }
+.faq__q[aria-expanded="true"] .faq__sign::before { transform: rotate(90deg) scaleX(0); }
+
+/* No max-height guessing. */
+.faq__a {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--dur-mid) var(--ease);
+}
+.faq__q[aria-expanded="true"] + .faq__a { grid-template-rows: 1fr; }
+.faq__a > div { overflow: hidden; }
+.faq__a p {
+  color: var(--ink-muted);
+  font-size: var(--t-small);
+  line-height: var(--lh-lead);
+  padding-block-end: var(--s5);
+}
+
+
+/* --- hours table ---------------------------------------------------------- */
+
+.hours { display: grid; grid-template-columns: 1fr auto; }
+
+.hours__day,
+.hours__time {
+  padding-block: 10px;
+  border-block-end: 1px solid var(--line);
+}
+.hours__day  { color: var(--ink-muted); }
+.hours__time { color: var(--ink); font-weight: 500; font-size: var(--t-num);
+               text-align: start; }
+
+.hours__day[data-today],
+.hours__time[data-today] {
+  color: var(--ink);
+  font-weight: 600;
+  background: var(--accent-wash);
+}
+/* one marker, not a badge */
+.hours__day[data-today]::before {
+  content: "";
+  display: inline-block;
+  inline-size: 6px;
+  block-size: 6px;
+  margin-inline-end: var(--s2);
+  background: var(--accent);
+  vertical-align: .1em;
+}
+.hours__day[data-today]  { padding-inline-start: var(--s3); }
+.hours__time[data-today] { padding-inline-end:   var(--s3); }
+
+.hours__closed { color: var(--ink-muted); font-weight: 400; }
+
+
+/* --- photo frame ----------------------------------------------------------
+   CSS-only duotone: grayscale, then multiply the highlight and screen the
+   shadow. Turns 24 mismatched phone frames into one deliberate set. */
+
+.photo {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.photo > img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.06) brightness(.98);
+}
+
+.photo::before,
+.photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.photo::before { background: var(--duo-hi); mix-blend-mode: multiply; }
+.photo::after  { background: var(--duo-lo); mix-blend-mode: screen; }
+
+/* Ratios */
+.photo--r1x1  { aspect-ratio: 1 / 1; }
+.photo--r4x5  { aspect-ratio: 4 / 5; }
+.photo--r16x9 { aspect-ratio: 16 / 9; }
+.photo--r21x9 { aspect-ratio: 21 / 9; }
+
+/* Safe crops — the burned-in Instagram captions live in the middle band,
+   so only the top third and bottom third are usable. */
+.photo--crop-top    > img { object-position: 50% 12%; }
+.photo--crop-bottom > img { object-position: 50% 86%; }
+
+/* Text over a photo: flat scrim, porcelain text (~8:1). */
+.photo__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: var(--scrim);
+}
+.photo__content {
+  position: absolute;
+  z-index: 3;
+  inset-block-end: 0;
+  inset-inline: 0;
+  padding: var(--s5);
+  color: #EEF1EF;
+}
+
+/* Photographs never move. No hover, no focus, no transition. */
+
+
+/* ==========================================================================
+   8. RESPONSIVE
+   ========================================================================== */
+
+@media (min-width: 380px) { :root { --gutter: 24px; } }
+
+@media (min-width: 600px) {
+  :root { --section-y: var(--s8); }
+
+  .grid-trust   { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s5); }
+  .grid-services{ display: grid; grid-template-columns: repeat(2, 1fr);
+                  column-gap: var(--s6); }
+}
+
+@media (min-width: 768px) { :root { --gutter: 40px; } }
+
+@media (min-width: 900px) {
+  :root { --section-y: var(--s9); }
+
+  .grid-12 { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--s6); }
+
+  /* Hero: type on the right seven columns, image on the far left four.
+     Asymmetric on purpose — the page has one axis and it is the right edge. */
+  .hero__type  { grid-column: 1 / span 7; }
+  .hero__photo { grid-column: 9 / span 4; align-self: start; }
+
+  /* About: portrait right, text left. */
+  .about__photo { grid-column: 1 / span 5; }
+  .about__text  { grid-column: 7 / span 6; }
+
+  /* Prose stays at the measure and stays hung on the right. Never centered. */
+  .faq, .prose { grid-column: 1 / span 7; max-inline-size: var(--measure); }
+
+  .site-header {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-block-size: 56px;
+    background: var(--surface);
+    border-block-end: 1px solid var(--line);
+  }
+}
+
+@media (min-width: 1200px) { :root { --section-y: var(--s10); } }
+
+
+/* ==========================================================================
+   9. REDUCED MOTION
+   The annotation reveal is decorative — its absence must leave the finished
+   state, never a blank line.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .annot__rule { transform: scaleX(1) !important; }
+}
+
+
+/* ==========================================================================
+   10. UTILITIES
+   ========================================================================== */
+
+.visually-hidden {
+  position: absolute;
+  inline-size: 1px; block-size: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.no-wrap { white-space: nowrap; }

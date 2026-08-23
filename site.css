@@ -1,0 +1,325 @@
+/* ==========================================================================
+   Rotem Place — page layout on top of tokens.css
+   Only page-level composition lives here. All colour/type/space comes from
+   the tokens. Nothing is defined solely inside a media query.
+   ========================================================================== */
+
+/* --- header --------------------------------------------------------------- */
+.site-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s4);
+  padding-block: var(--s4);
+  border-block-end: 1px solid var(--line);
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.125rem;
+  letter-spacing: -.01em;
+  color: var(--ink);
+}
+
+.btn--sm {
+  min-block-size: 38px;
+  padding-inline: var(--s4);
+  font-size: var(--t-small);
+}
+
+/* --- hero ----------------------------------------------------------------- */
+.hero h1 {
+  margin-block: var(--s4) var(--s5);
+  max-inline-size: 18ch;
+}
+
+.hero .t-lead {
+  max-inline-size: var(--measure);
+}
+
+.hero__cta {
+  margin-block-start: var(--s6);
+  max-inline-size: 26rem;
+  gap: var(--s3);
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- trust strip ---------------------------------------------------------- */
+.trust {
+  list-style: none;
+  margin: var(--s7) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s4);
+  border-block-start: 1px solid var(--line);
+  padding-block-start: var(--s5);
+}
+
+.trust li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.trust strong {
+  font-size: var(--t-body);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.trust span {
+  font-size: var(--t-small);
+  line-height: var(--lh-small);
+  color: var(--ink-muted);
+}
+
+/* --- services / cards ----------------------------------------------------- */
+.svc-list {
+  margin-block: var(--s4) var(--s7);
+}
+
+.svc__meta a {
+  color: var(--accent);
+  text-decoration: none;
+  border-block-end: 1px solid currentColor;
+  padding-block-end: 1px;
+}
+
+.svc__meta a:hover { color: var(--ink); }
+
+/* --- prose ---------------------------------------------------------------- */
+.prose {
+  max-inline-size: var(--measure);
+  margin-block-start: var(--s5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s4);
+}
+
+.prose p {
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  color: var(--ink-muted);
+}
+
+.prose p:first-child { color: var(--ink); }
+
+/* --- process steps -------------------------------------------------------- */
+.steps {
+  list-style: none;
+  margin: var(--s5) 0 0;
+  padding: 0;
+  max-inline-size: var(--measure);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s5);
+}
+
+.steps li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--s4);
+  align-items: start;
+}
+
+.steps .num {
+  inline-size: 30px;
+  block-size: 30px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: var(--t-small);
+}
+
+.steps strong {
+  display: block;
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.steps p {
+  margin-block-start: var(--s2);
+  font-size: var(--t-small);
+  line-height: var(--lh-small);
+  color: var(--ink-muted);
+}
+
+/* --- figures -------------------------------------------------------------- */
+figure.photo {
+  margin: 0 0 var(--s7);
+}
+
+/* --- faq ------------------------------------------------------------------ */
+.faq { margin-block-start: var(--s5); max-inline-size: var(--measure); }
+.faq h3 { margin: 0; }
+
+/* --- cta section ---------------------------------------------------------- */
+.cta h2 { max-inline-size: 22ch; }
+.cta .t-lead { max-inline-size: var(--measure); margin-block-start: var(--s4); }
+
+/* --- hours ---------------------------------------------------------------- */
+.hours { margin-block-start: var(--s5); max-inline-size: 26rem; }
+
+/* --- footer --------------------------------------------------------------- */
+.site-foot {
+  border-block-start: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s4);
+  padding-block-end: calc(var(--dock-h) + var(--s7));
+}
+
+.foot-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+  font-size: var(--t-small);
+  color: var(--ink-muted);
+}
+
+.foot-links a {
+  color: var(--ink);
+  text-decoration: none;
+  border-block-end: 1px solid var(--line-strong);
+}
+
+.foot-links a:hover { color: var(--accent); border-block-end-color: var(--accent); }
+
+/* --- wider screens -------------------------------------------------------- */
+@media (min-width: 40rem) {
+  .trust { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s5); }
+  .hero__cta { flex-direction: row; }
+  .hero__cta .btn { inline-size: auto; flex: 0 1 auto; padding-inline: var(--s6); }
+  .foot-links { flex-direction: row; flex-wrap: wrap; gap: var(--s5); }
+}
+
+@media (min-width: 60rem) {
+  .trust { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .svc-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 var(--s7); }
+  .site-foot { padding-block-end: var(--s8); }
+}
+
+/* FAQ — native <details>. The tokens.css accordion relied on a
+   0fr -> 1fr grid transition that measured 0px in testing even with an
+   explicit `auto` track, and on a sibling selector that cannot reach past the
+   <h3> the heading structure requires. <details> needs neither CSS nor JS to
+   open, so it cannot silently fail. */
+.faq details.faq__item { border-block-end: 1px solid var(--line); }
+
+.faq summary.faq__q {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: var(--s4);
+  min-block-size: 56px;
+  padding-block: var(--s4);
+  cursor: pointer;
+  list-style: none;
+}
+.faq summary.faq__q::-webkit-details-marker { display: none; }
+.faq summary.faq__q::marker { content: ""; }
+
+.faq summary.faq__q h3 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--t-lead);
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.faq details[open] summary.faq__q h3 { font-weight: 700; }
+
+.faq summary.faq__q:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* the vertical stroke of the "+" collapses into a "−" when open */
+.faq details[open] .faq__sign::before { transform: rotate(90deg) scaleX(0); }
+
+.faq .faq__a { display: block; }
+.faq .faq__a p {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: var(--t-small);
+  line-height: var(--lh-lead);
+  padding-block-end: var(--s5);
+}
+
+/* --- results: the before/after pairs, her strongest proof ----------------- */
+.results {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s4);
+  margin-block: var(--s5) var(--s7);
+}
+
+.results figure { margin: 0; }
+
+.results figcaption {
+  padding: var(--s3) var(--s4);
+  font-size: var(--t-label);
+  font-weight: 700;
+  letter-spacing: var(--ls-label);
+  color: var(--ink-muted);
+  border-block-start: 1px solid var(--line);
+}
+
+@media (min-width: 40rem) {
+  .results { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s5); }
+}
+
+/* Photography in true colour — a deliberate exception to the duotone rule in
+   tokens.css. The duotone exists to unify 24 mismatched phone frames, but only
+   three curated photographs are used here, and for a skin clinic the colour IS
+   the evidence: a grayscale before/after proves nothing about skin or brows. */
+.photo--true > img { filter: none; }
+.photo--true::before,
+.photo--true::after { content: none; }
+
+/* --- price line on a service card ---------------------------------------
+   Sourced from Rotem's own EasyBizy booking data, where the prices are
+   already public. Nothing here is estimated. */
+.svc__price {
+  margin-block-start: var(--s2);
+  font-size: var(--t-small);
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- cancellation policy -------------------------------------------------
+   Rotem's own wording, taken from her booking system. It protects her diary,
+   and stating it up front is also what a serious clinic reads like. */
+.policy {
+  margin-block-start: var(--s7);
+  padding: var(--s5);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  max-inline-size: var(--measure);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+}
+
+.policy p { margin: 0; font-size: var(--t-small); line-height: var(--lh-small); color: var(--ink-muted); }
+
+.policy .lbl-policy {
+  font-weight: 700;
+  font-size: var(--t-label);
+  letter-spacing: var(--ls-label);
+  color: var(--accent);
+}
