@@ -62,7 +62,8 @@
     "addressCountry": "IL"
   },
   "openingHoursSpecification": [
-    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Sunday","Monday","Tuesday","Wednesday"], "opens": "09:00", "closes": "19:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Sunday","Tuesday","Wednesday"], "opens": "09:00", "closes": "19:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Monday", "opens": "00:00", "closes": "00:00" },
     { "@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday", "opens": "09:00", "closes": "15:00" },
     { "@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "09:00", "closes": "14:00" },
     { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "00:00", "closes": "00:00" }
@@ -457,7 +458,7 @@
     <h2>הקליניקה – סירקין 5, גבעתיים</h2>
     <div class="hours" id="hours">
       <div class="hours__day" data-day="0">ראשון</div><div class="hours__time" data-day="0">09:00–19:00</div>
-      <div class="hours__day" data-day="1">שני</div><div class="hours__time" data-day="1">09:00–19:00</div>
+      <div class="hours__day" data-day="1">שני</div><div class="hours__time hours__closed" data-day="1">סגור</div>
       <div class="hours__day" data-day="2">שלישי</div><div class="hours__time" data-day="2">09:00–19:00</div>
       <div class="hours__day" data-day="3">רביעי</div><div class="hours__time" data-day="3">09:00–19:00</div>
       <div class="hours__day" data-day="4">חמישי</div><div class="hours__time" data-day="4">09:00–15:00</div>
