@@ -1,0 +1,14 @@
+{
+  "name": "רותם פלייס — קליניקת קוסמטיקה בגבעתיים",
+  "short_name": "רותם פלייס",
+  "lang": "he-IL",
+  "dir": "rtl",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#F7F2EE",
+  "theme_color": "#F7F2EE",
+  "icons": [
+    { "src": "/assets/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

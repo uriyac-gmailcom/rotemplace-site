@@ -858,3 +858,239 @@ figure.photo {
     }
   }
 }
+
+
+/* ==========================================================================
+   14. SERVICE PAGES — components used only by the per-treatment pages.
+   Same vocabulary as the home page: logical properties, tokens, no new
+   colours. Nothing here is decorative-only; each piece carries content that
+   a reader uses.
+   ========================================================================== */
+
+/* --- breadcrumb: a real trail, matched by BreadcrumbList JSON-LD ---------- */
+.crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s2);
+  margin-block: var(--s5) 0;
+  font-size: var(--t-small);
+  color: var(--ink-muted);
+}
+
+.crumbs a {
+  color: var(--ink-muted);
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 3px;
+}
+
+.crumbs a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+/* The separator points the way RTL text runs. */
+.crumbs li + li::before {
+  content: "‹";
+  margin-inline-end: var(--s2);
+  color: var(--line-strong);
+}
+
+.crumbs li { display: flex; align-items: center; }
+.crumbs [aria-current="page"] { color: var(--ink); font-weight: 600; }
+
+
+/* --- key facts: the answers people scan for before reading --------------- */
+.keyfacts {
+  margin-block: var(--s6) 0;
+  padding: var(--s5);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-frame);
+  display: grid;
+  gap: var(--s4);
+  max-inline-size: var(--measure-wide);
+}
+
+.keyfacts > div { display: flex; flex-direction: column; gap: 3px; }
+
+.keyfacts dt {
+  font-size: var(--t-label);
+  font-weight: 700;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.keyfacts dd {
+  margin: 0;
+  font-size: var(--t-small);
+  line-height: var(--lh-small);
+  color: var(--ink);
+}
+
+
+/* --- note: honest caveats. Deliberately quiet, never a warning banner. ---- */
+.note {
+  margin-block: var(--s5);
+  padding: var(--s4) var(--s5);
+  background: var(--accent-wash);
+  border-radius: var(--radius-frame);
+  border-inline-start: 3px solid var(--accent);
+  max-inline-size: var(--measure-wide);
+}
+
+.note p {
+  margin: 0;
+  font-size: var(--t-small);
+  line-height: var(--lh-lead);
+  color: var(--ink);
+}
+
+.note p + p { margin-block-start: var(--s3); }
+
+.note strong { font-weight: 700; }
+
+
+/* --- checklist: "before" / "after" instructions, as real lists ------------ */
+.checks {
+  margin-block: var(--s4) var(--s5);
+  max-inline-size: var(--measure);
+  display: grid;
+  gap: var(--s3);
+}
+
+.checks li {
+  position: relative;
+  padding-inline-start: var(--s5);
+  font-size: var(--t-small);
+  line-height: var(--lh-lead);
+  color: var(--ink-muted);
+}
+
+.checks li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: .62em;
+  inline-size: 7px;
+  block-size: 7px;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+}
+
+.checks li strong { color: var(--ink); font-weight: 600; }
+
+
+/* --- related treatments: internal links that a reader actually follows ---- */
+.related {
+  margin-block-start: var(--s7);
+  padding-block-start: var(--s5);
+  border-block-start: 1px solid var(--line);
+}
+
+.related h2 { font-size: var(--t-h2-sub); margin-block-end: var(--s4); }
+
+.related ul {
+  display: grid;
+  gap: var(--s3);
+  grid-template-columns: 1fr;
+}
+
+.related a {
+  display: block;
+  padding: var(--s4);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-frame);
+  color: var(--ink);
+  text-decoration: none;
+  min-block-size: 44px;
+}
+
+.related a strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+  color: var(--ink);
+}
+
+.related a span {
+  display: block;
+  margin-block-start: 3px;
+  font-size: var(--t-small);
+  line-height: var(--lh-small);
+  color: var(--ink-muted);
+}
+
+.related a:hover { border-color: var(--accent); }
+.related a:hover strong { color: var(--accent); }
+
+
+/* --- footer treatment index: crawlable, and useful to a phone visitor ----- */
+.foot-nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+  font-size: var(--t-small);
+}
+
+.foot-nav > strong {
+  font-size: var(--t-label);
+  font-weight: 700;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-block-end: var(--s1);
+}
+
+.foot-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 44px;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+}
+
+.foot-nav a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+
+/* --- long-form body on a service page ------------------------------------ */
+.svc-page .prose { max-inline-size: var(--measure); }
+
+.svc-page h2 {
+  margin-block: var(--s7) var(--s3);
+  font-size: var(--t-h2-sub);
+}
+
+.svc-page h2:first-of-type { margin-block-start: var(--s6); }
+
+.svc-page h3 {
+  margin-block: var(--s5) var(--s2);
+  font-family: var(--font-body);
+  font-size: var(--t-h3);
+  font-weight: 700;
+  line-height: var(--lh-h3);
+  color: var(--ink);
+}
+
+.svc-page .prose p,
+.svc-page > p {
+  max-inline-size: var(--measure);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  color: var(--ink-muted);
+}
+
+.svc-page .prose strong { color: var(--ink); font-weight: 600; }
+
+
+@media (min-width: 40rem) {
+  .keyfacts   { grid-template-columns: repeat(2, 1fr); gap: var(--s5); }
+  .related ul { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 60rem) {
+  .related ul { grid-template-columns: repeat(3, 1fr); }
+}

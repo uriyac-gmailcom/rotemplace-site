@@ -3,6 +3,15 @@ README.md
 copy.md
 seo.md
 design.md
+seo-plan.md
 _preview.html
+_frames.html
 parts/
 *.py
+
+# Local scratch: probes, screenshots, unused source assets.
+_probe.html
+_shot-*.png
+_logo-view.png
+_favicon-check.png
+assets/treatment-device.jpg
