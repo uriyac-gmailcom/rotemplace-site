@@ -606,6 +606,15 @@ figure.photo {
 
 .hours { margin-block-start: var(--s5); max-inline-size: 24rem; }
 
+/* Two ways to get here, under the hours: the Google listing (reviews, photos,
+   route) and Waze. Plain secondary buttons — WhatsApp stays the only primary. */
+.directions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s3);
+  margin-block-start: var(--s5);
+}
+
 
 /* ==========================================================================
    12. FOOTER + SOCIAL
@@ -812,7 +821,7 @@ figure.photo {
   }
   #location > .annot,
   #location > h2 { grid-column: 1 / -1; }
-  #location > .hours { grid-column: 1; }
+  #location > .visit { grid-column: 1; }
   #location > .results { grid-column: 2; margin-block: var(--s5) 0; }
 }
 

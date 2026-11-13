@@ -50,11 +50,12 @@
   "@context": "https://schema.org",
   "@type": "BeautySalon",
   "@id": "https://www.rotemplace.co.il/#business",
-  "name": "רותם פלייס",
-  "alternateName": "Rotem Place",
+  "name": "Rotem's Place",
+  "alternateName": ["רותם פלייס", "Rotem Place", "Rotem cosmetics clinic"],
   "description": "קליניקת קוסמטיקה בגבעתיים בניהול רותם כהן, קוסמטיקאית מוסמכת PME עם ניסיון של 13 שנה. טיפולי פנים מותאמים אישית, הסרת שיער בפנים ובגוף, טיפולי אקנה, פיגמנטציה ואנטי-אייג'ינג.",
   "url": "https://www.rotemplace.co.il/",
-  "image": ["https://www.rotemplace.co.il/assets/rotem-portrait.jpg",
+  "image": ["https://www.rotemplace.co.il/assets/storefront.jpg",
+            "https://www.rotemplace.co.il/assets/rotem-portrait.jpg",
             "https://www.rotemplace.co.il/assets/gold-mask.jpg",
             "https://www.rotemplace.co.il/assets/brows-before-after.jpg"],
   "logo": "https://www.rotemplace.co.il/assets/logo.png",
@@ -64,9 +65,11 @@
     "streetAddress": "סירקין 5",
     "addressLocality": "גבעתיים",
     "addressRegion": "מחוז תל אביב",
-    "postalCode": "53298",
+    "postalCode": "5329408",
     "addressCountry": "IL"
   },
+  "geo": { "@type": "GeoCoordinates", "latitude": 32.0766605, "longitude": 34.8142291 },
+  "hasMap": "https://maps.google.com/?cid=5940175902758945014",
   "openingHoursSpecification": [
     { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Sunday","Tuesday","Wednesday"], "opens": "09:00", "closes": "19:00" },
     { "@type": "OpeningHoursSpecification", "dayOfWeek": "Monday", "opens": "00:00", "closes": "00:00" },
@@ -174,7 +177,7 @@
 
 <header class="shell site-head">
   <a class="brand" href="#main" aria-label="רותם פלייס — לראש העמוד">
-    <img src="assets/logo.png" width="243" height="216" alt="רותם פלייס — New Age Cosmetics" decoding="async">
+    <img src="assets/logo.png" width="243" height="216" alt="Rotem's Place — New Age Cosmetics" decoding="async">
   </a>
   <a class="btn btn--secondary btn--sm" href="tel:+972545777732" aria-label="להתקשר לרותם">
     <span dir="ltr">054-577-7732</span>
@@ -466,17 +469,28 @@
     <p class="annot"><span class="annot__tick"></span><span class="annot__label">הקליניקה</span><span class="annot__rule"></span></p>
     <h2>הקליניקה – סירקין 5, גבעתיים</h2>
     <p class="t-lead">רוצה לדעת יותר על הקליניקה ועל איך נראה הביקור הראשון? <a href="קוסמטיקאית-גבעתיים/">קוסמטיקאית בגבעתיים — כל הפרטים</a>.</p>
-    <div class="hours" id="hours">
-      <div class="hours__day" data-day="0">ראשון</div><div class="hours__time" data-day="0">09:00–19:00</div>
-      <div class="hours__day" data-day="1">שני</div><div class="hours__time hours__closed" data-day="1">סגור</div>
-      <div class="hours__day" data-day="2">שלישי</div><div class="hours__time" data-day="2">09:00–19:00</div>
-      <div class="hours__day" data-day="3">רביעי</div><div class="hours__time" data-day="3">09:00–19:00</div>
-      <div class="hours__day" data-day="4">חמישי</div><div class="hours__time" data-day="4">09:00–15:00</div>
-      <div class="hours__day" data-day="5">שישי</div><div class="hours__time" data-day="5">09:00–14:00</div>
-      <div class="hours__day" data-day="6">שבת</div><div class="hours__time hours__closed" data-day="6">סגור</div>
+    <div class="visit">
+      <div class="hours" id="hours">
+        <div class="hours__day" data-day="0">ראשון</div><div class="hours__time" data-day="0">09:00–19:00</div>
+        <div class="hours__day" data-day="1">שני</div><div class="hours__time hours__closed" data-day="1">סגור</div>
+        <div class="hours__day" data-day="2">שלישי</div><div class="hours__time" data-day="2">09:00–19:00</div>
+        <div class="hours__day" data-day="3">רביעי</div><div class="hours__time" data-day="3">09:00–19:00</div>
+        <div class="hours__day" data-day="4">חמישי</div><div class="hours__time" data-day="4">09:00–15:00</div>
+        <div class="hours__day" data-day="5">שישי</div><div class="hours__time" data-day="5">09:00–14:00</div>
+        <div class="hours__day" data-day="6">שבת</div><div class="hours__time hours__closed" data-day="6">סגור</div>
+      </div>
+
+      <div class="directions">
+        <a class="btn btn--secondary btn--sm" href="https://maps.google.com/?cid=5940175902758945014" rel="noopener">ניווט ב-Google Maps</a>
+        <a class="btn btn--secondary btn--sm" href="https://waze.com/ul?ll=32.0766605,34.8142291&amp;navigate=yes" rel="noopener">ניווט ב-Waze</a>
+      </div>
     </div>
 
-    <div class="results results--single">
+    <div class="results">
+      <figure class="photo photo--r4x5">
+        <img src="assets/storefront.jpg" width="880" height="1100" loading="lazy" decoding="async" alt="חזית הקליניקה בסירקין 5, גבעתיים: גגון שחור עם הכיתוב Rotem's Place – קליניקה לקוסמטיקה מתקדמת">
+        <figcaption>סירקין 5 — הגגון השחור עם הלוגו</figcaption>
+      </figure>
       <figure class="photo photo--r4x5">
         <img src="assets/gold-mask.jpg" width="640" height="909" loading="lazy" decoding="async" alt="טיפול פנים עם מסכת זהב בקליניקה בגבעתיים">
         <figcaption>מסכת זהב — רגע מתוך טיפול פנים</figcaption>
@@ -486,9 +500,9 @@
 </main>
 
 <footer class="shell section site-foot">
-  <p><strong>רותם פלייס — קליניקת קוסמטיקה</strong><br>רותם כהן, קוסמטיקאית מוסמכת PME</p>
+  <p><strong>רותם פלייס (<span lang="en" dir="ltr">Rotem's Place</span>) — קליניקת קוסמטיקה</strong><br>רותם כהן, קוסמטיקאית מוסמכת PME</p>
   <ul class="foot-links">
-    <li>סירקין 5, גבעתיים</li>
+    <li><a href="https://maps.google.com/?cid=5940175902758945014" rel="noopener">סירקין 5, גבעתיים</a></li>
     <li><a href="tel:+972545777732"><span dir="ltr">054-577-7732</span></a></li>
     <li><a href="https://wa.me/972545777732" rel="noopener">וואטסאפ</a></li>
     <li><a href="https://schedule.easybizy.net/rotemcohen/welcome" rel="noopener">קביעת תור אונליין</a></li>
