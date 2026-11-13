@@ -90,7 +90,10 @@ a { color: inherit; }
 
 /* ---------- Gallery ---------- */
 .gallery { padding-bottom: clamp(64px, 10vw, 128px); }
-.strip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+.strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.strip .room { grid-column: span 2; grid-row: span 2; display: flex; flex-direction: column; }
+.strip .room img { flex: 1; min-height: 0; aspect-ratio: auto; height: 100%; }
+.storefront { width: 100%; max-width: 320px; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 6px; margin-top: 28px; }
 .strip figure { margin: 0; }
 .strip img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 6px; background: var(--line); }
 .strip figcaption { margin-top: 8px; font-size: .95rem; color: var(--mute); }
@@ -129,6 +132,8 @@ footer a:hover { color: var(--gold); }
   .cta { margin-bottom: 36px; }
   .strip { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 72%; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; margin: 0 calc(-1 * var(--gutter)); padding-inline: var(--gutter); scroll-padding-inline: var(--gutter); }
   .strip figure { scroll-snap-align: start; }
+  .strip .room { grid-column: auto; grid-row: auto; display: block; }
+  .strip .room img { aspect-ratio: 4 / 5; height: auto; }
   .cards { grid-template-columns: 1fr 1fr; gap: 28px 12px; }
   .rotem .wrap { grid-template-columns: 112px 1fr; }
   .rotem img { width: 112px; }
@@ -181,11 +186,11 @@ footer a:hover { color: var(--gold); }
   <section class="gallery wrap" aria-labelledby="g-title">
     <h2 id="g-title">בקליניקה</h2>
     <div class="strip">
+      <figure class="room"><img src="/assets/t/room.jpg" alt="חדר הטיפולים בקליניקה" width="640" height="800" loading="lazy"><figcaption>חדר הטיפולים</figcaption></figure>
       <figure><img src="/assets/t/device-laser.jpg" alt="מכונת הלייזר להסרת שיער בקליניקה" width="720" height="900" loading="lazy"><figcaption>מכונת הלייזר</figcaption></figure>
       <figure><img src="/assets/t/device-led.jpg" alt="מכשיר הפוטותרפיה (טיפול באור) בקליניקה" width="850" height="1064" loading="lazy"><figcaption>מכשיר האור</figcaption></figure>
       <figure><img src="/assets/t/device-leonardo.jpg" alt="מכשיר הפילינג בקליניקה" width="576" height="720" loading="lazy"><figcaption>מכשיר הפילינג</figcaption></figure>
       <figure><img src="/assets/t/device-steamer.jpg" alt="מכשיר אדים לטיפולי פנים" width="640" height="800" loading="lazy"><figcaption>אדים לניקוי עמוק</figcaption></figure>
-      <figure><img src="/assets/storefront.jpg" alt="חזית הקליניקה בסירקין 5, גבעתיים" width="880" height="1100" loading="lazy"><figcaption>סירקין 5</figcaption></figure>
     </div>
   </section>
 
@@ -205,6 +210,7 @@ footer a:hover { color: var(--gold); }
           <a href="https://maps.google.com/?cid=5940175902758945014" target="_blank" rel="noopener">פתיחה במפות</a>
         </address>
         <a class="phone" href="tel:+972545777732">054-577-7732</a>
+        <img class="storefront" src="/assets/storefront.jpg" alt="חזית הקליניקה בסירקין 5, גבעתיים" width="880" height="1100" loading="lazy">
       </div>
       <div>
         <h2>שעות פתיחה</h2>
