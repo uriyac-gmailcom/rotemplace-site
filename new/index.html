@@ -83,13 +83,14 @@ a { color: inherit; }
 /* ---------- Treatments: one typographic block ---------- */
 .treatments { padding-block: clamp(64px, 10vw, 128px) clamp(48px, 8vw, 96px); }
 .treatments h2, .gallery h2, .visit h2 { margin: 0 0 28px; font: 400 clamp(1.9rem, 4vw, 2.6rem)/1.1 var(--display); }
-.menu { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); column-gap: 32px; }
-.menu li { font: 400 clamp(1.7rem, 3.6vw, 2.5rem)/1.2 var(--display); color: var(--ink); }
-.menu li { padding: 14px 0; border-top: 1px solid var(--line); }
+.cards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 36px 16px; }
+.cards img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 6px; background: var(--line); }
+.cards h3 { margin: 14px 0 2px; font: 400 clamp(1.4rem, 2.2vw, 1.75rem)/1.15 var(--display); }
+.cards p { margin: 0; color: var(--mute); font-size: 1rem; line-height: 1.4; }
 
 /* ---------- Gallery ---------- */
 .gallery { padding-bottom: clamp(64px, 10vw, 128px); }
-.strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .strip figure { margin: 0; }
 .strip img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 6px; background: var(--line); }
 .strip figcaption { margin-top: 8px; font-size: .95rem; color: var(--mute); }
@@ -128,6 +129,7 @@ footer a:hover { color: var(--gold); }
   .cta { margin-bottom: 36px; }
   .strip { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 72%; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; margin: 0 calc(-1 * var(--gutter)); padding-inline: var(--gutter); scroll-padding-inline: var(--gutter); }
   .strip figure { scroll-snap-align: start; }
+  .cards { grid-template-columns: 1fr 1fr; gap: 28px 12px; }
   .rotem .wrap { grid-template-columns: 112px 1fr; }
   .rotem img { width: 112px; }
   .visit .wrap { grid-template-columns: 1fr; }
@@ -164,23 +166,23 @@ footer a:hover { color: var(--gold); }
 <main>
   <section class="treatments wrap" aria-labelledby="t-title">
     <h2 id="t-title">טיפולים</h2>
-    <ul class="menu">
-      <li>טיפולי פנים</li>
-      <li>אקנה</li>
-      <li>אנטי-אייג'ינג</li>
-      <li>פיגמנטציה</li>
-      <li>הסרת שיער</li>
-      <li>עיצוב גבות</li>
-      <li>הרמת ריסים</li>
+    <ul class="cards">
+      <li><img src="/assets/facial-hands.jpg" alt="רותם בטיפול פנים" width="640" height="800" loading="lazy"><h3>טיפולי פנים</h3><p>עור רענן וזוהר</p></li>
+      <li><img src="/assets/facial-device.jpg" alt="טיפול פנים במכשיר" width="720" height="900" loading="lazy"><h3>אנטי-אייג'ינג</h3><p>עור מוצק ומלא חיים</p></li>
+      <li><img src="/assets/t/acne.jpg" alt="טיפול באקנה במכשיר" width="720" height="900" loading="lazy"><h3>אקנה</h3><p>עור נקי ושקט</p></li>
+      <li><img src="/assets/t/pigment.jpg" alt="סרום בטיפול פיגמנטציה" width="720" height="900" loading="lazy"><h3>פיגמנטציה</h3><p>גוון אחיד ובהיר</p></li>
+      <li><img src="/assets/t/phototherapy.jpg" alt="טיפול פוטותרפיה באור" width="720" height="900" loading="lazy"><h3>פוטותרפיה</h3><p>אור שמחדש את העור</p></li>
+      <li><img src="/assets/t/hair.jpg" alt="הסרת שיער במכשיר" width="720" height="900" loading="lazy"><h3>הסרת שיער</h3><p>עור חלק, בפנים ובגוף</p></li>
+      <li><img src="/assets/t/brows.jpg" alt="גבות מעוצבות" width="720" height="900" loading="lazy"><h3>עיצוב גבות</h3><p>גבות שמתאימות לפנים שלך</p></li>
+      <li><img src="/assets/lashes-before-after.jpg" alt="הרמת ריסים, לפני ואחרי" width="990" height="990" loading="lazy"><h3>הרמת ריסים</h3><p>מבט פתוח, בלי מסקרה</p></li>
     </ul>
   </section>
 
   <section class="gallery wrap" aria-labelledby="g-title">
-    <h2 id="g-title">מהקליניקה</h2>
+    <h2 id="g-title">בקליניקה</h2>
     <div class="strip">
-      <figure><img src="/assets/facial-hands.jpg" alt="רותם בטיפול פנים בקליניקה" width="640" height="800" loading="lazy"><figcaption>טיפולי פנים</figcaption></figure>
-      <figure><img src="/assets/lashes-before-after.jpg" alt="הרמת ריסים, לפני ואחרי" width="990" height="990" loading="lazy"><figcaption>הרמת ריסים</figcaption></figure>
-      <figure><img src="/assets/facial-device.jpg" alt="טיפול פנים במכשיר בקליניקה" width="720" height="900" loading="lazy"><figcaption>בקליניקה</figcaption></figure>
+      <figure><img src="/assets/t/device-leonardo.jpg" alt="מכשיר הפילינג בקליניקה" width="576" height="720" loading="lazy"><figcaption>מכשיר הפילינג</figcaption></figure>
+      <figure><img src="/assets/t/device-steamer.jpg" alt="מכשיר אדים לטיפולי פנים" width="640" height="800" loading="lazy"><figcaption>אדים לניקוי עמוק</figcaption></figure>
       <figure><img src="/assets/storefront.jpg" alt="חזית הקליניקה בסירקין 5, גבעתיים" width="880" height="1100" loading="lazy"><figcaption>סירקין 5</figcaption></figure>
     </div>
   </section>
