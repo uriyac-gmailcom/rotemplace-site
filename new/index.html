@@ -210,6 +210,13 @@ a { color: inherit; }
 .strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 .strip .room { grid-column: span 2; grid-row: span 2; display: flex; flex-direction: column; }
 .strip .room img { flex: 1; min-height: 0; aspect-ratio: auto; height: 100%; }
+.vbox { position: relative; flex: 1; min-height: 0; overflow: hidden; border-radius: 6px; background: var(--awning); }
+.vbox video.loop { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 100%; transform: scale(1.2); transform-origin: 50% 100%; }
+.vtoggle { position: absolute; left: 12px; bottom: 12px; width: 40px; height: 40px; border: 0; border-radius: 50%; background: rgba(38,36,34,.6); cursor: pointer; }
+.vtoggle::before, .vtoggle::after { content: ""; position: absolute; top: 13px; width: 4px; height: 14px; background: #F4EFE6; border-radius: 1px; }
+.vtoggle::before { left: 14px; } .vtoggle::after { left: 22px; }
+.vtoggle[aria-pressed="true"]::before { left: 16px; width: 0; height: 0; background: none; border-style: solid; border-width: 7px 0 7px 12px; border-color: transparent transparent transparent #F4EFE6; }
+.vtoggle[aria-pressed="true"]::after { display: none; }
 .storefront { width: 100%; max-width: 320px; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 6px; margin-top: 28px; }
 .strip figure { margin: 0; }
 .strip img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 6px; background: var(--line); }
@@ -267,6 +274,7 @@ footer a:hover { color: var(--gold); }
   .strip figure { scroll-snap-align: start; }
   .strip .room { grid-column: auto; grid-row: auto; display: block; }
   .strip .room img { aspect-ratio: 4 / 5; height: auto; }
+  .vbox { aspect-ratio: 4 / 5; }
   .cards { grid-template-columns: 1fr 1fr; gap: 28px 12px; }
   .rotem .wrap { grid-template-columns: 112px 1fr; }
   .rotem img { width: 112px; }
@@ -333,11 +341,11 @@ footer a:hover { color: var(--gold); }
   <section class="gallery wrap" aria-labelledby="g-title">
     <h2 id="g-title">בקליניקה</h2>
     <div class="strip">
-      <figure class="room"><img src="/assets/t/rotem-treatment-room.jpg" alt="רותם בטיפול פנים בחדר הטיפולים" width="800" height="1000" loading="lazy"><figcaption>חדר הטיפולים</figcaption></figure>
+      <figure class="room"><div class="vbox"><video class="loop" muted playsinline loop preload="none" poster="/assets/video/room-loop.jpg" data-src="/assets/video/room-loop.mp4" data-segs="0-3.2,10.2-13.4" aria-label="סיור קצר בחדר הטיפולים" width="720" height="900"></video><button class="vtoggle" type="button" aria-label="עצירת הסרטון" aria-pressed="false"></button></div><figcaption>חדר הטיפולים</figcaption></figure>
       <figure><img src="/assets/t/device-laser.jpg" alt="מכונת הלייזר להסרת שיער בקליניקה" width="720" height="900" loading="lazy"><figcaption>מכונת הלייזר</figcaption></figure>
       <figure><img src="/assets/t/device-led.jpg" alt="מכשיר הפוטותרפיה (טיפול באור) בקליניקה" width="850" height="1064" loading="lazy"><figcaption>מכשיר האור</figcaption></figure>
       <figure><img src="/assets/t/device-leonardo.jpg" alt="מכשיר הפילינג בקליניקה" width="576" height="720" loading="lazy"><figcaption>מכשיר הפילינג</figcaption></figure>
-      <figure><img src="/assets/t/room.jpg" alt="פינת ההמתנה בחדר הטיפולים, באור סגול" width="640" height="800" loading="lazy"><figcaption>באור סגול</figcaption></figure>
+      <figure><img src="/assets/t/rotem-treatment-room.jpg" alt="רותם בטיפול פנים בחדר הטיפולים" width="800" height="1000" loading="lazy"><figcaption>רותם בטיפול</figcaption></figure>
     </div>
   </section>
 
@@ -410,6 +418,25 @@ document.querySelectorAll('.reel').forEach(function (b) {
   var dock = document.getElementById('dock'), hero = document.querySelector('.awning');
   if (!dock || !hero || !('IntersectionObserver' in window)) { if (dock) dock.classList.add('on'); return; }
   new IntersectionObserver(function (e) { dock.classList.toggle('on', !e[0].isIntersecting); }).observe(hero);
+})();
+(function () {
+  var v = document.querySelector('video.loop'), btn = document.querySelector('.vtoggle');
+  if (!v) return;
+  var segs = (v.dataset.segs || '').split(',').map(function (x) { return x.split('-').map(parseFloat); }), k = 0, stopped = false;
+  v.addEventListener('timeupdate', function () {
+    if (!segs.length || v.seeking) return;
+    if (v.currentTime > segs[k][1] || v.currentTime < segs[k][0] - 0.3) { k = (k + 1) % segs.length; v.currentTime = segs[k][0]; }
+  });
+  function go() { if (!v.getAttribute('src')) v.src = v.dataset.src; var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+  btn.addEventListener('click', function () {
+    stopped = !stopped; btn.setAttribute('aria-pressed', String(stopped));
+    btn.setAttribute('aria-label', stopped ? 'הפעלת הסרטון' : 'עצירת הסרטון');
+    if (stopped) v.pause(); else go();
+  });
+  if (!('IntersectionObserver' in window)) { go(); return; }
+  new IntersectionObserver(function (e) {
+    if (e[0].isIntersecting) { if (!stopped) go(); } else { v.pause(); }
+  }, { threshold: 0.25 }).observe(v);
 })();
 </script>
 </body>
